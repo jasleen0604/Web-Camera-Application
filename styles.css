@@ -1,0 +1,25 @@
+body{
+    margin: 0;
+}
+.video-player{
+    background-color: black;
+    height: 100vh;
+    width: 100vw;
+}
+
+.video{
+height: 100vh;
+width: 100%;
+}
+.record-btn{
+    position: fixed;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    border-style: solid;
+    z-index: 100;
+    color: #181715;
+    background-color: floralwhite;
+    top: 300px;
+    right: 50px;
+}
