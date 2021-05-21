@@ -11,7 +11,7 @@ body{
 height: 100vh;
 width: 100%;
 }
-.record-btn{
+.record-btn, .capture-btn{
     position: fixed;
     height: 5rem;
     width: 5rem;
@@ -20,6 +20,9 @@ width: 100%;
     z-index: 100;
     color: #181715;
     background-color: floralwhite;
-    top: 300px;
+    top: 250px;
     right: 50px;
+}
+.capture-btn{
+    top: 400px;
 }

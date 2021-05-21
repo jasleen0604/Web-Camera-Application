@@ -13,11 +13,13 @@
         <video autoplay class="video" id="video-elem"></video> 
     </div>
     <button id="record-video" class="record-btn">Record</button>
+    <button id="capture" class="capture-btn">Capture</button>
 
 
     <script>
         let videoElem = document.querySelector("#video-elem");
         //let audioElem = document.querySelector("audio");
+        let capturebtn = document.querySelector(".capture-btn");
 
         let constraints = {
             audio: true,
@@ -71,6 +73,23 @@
                 videoRecorder.innerHTML = "Record";
                 recordState = false;
             }
+        })
+        capturebtn.addEventListener("click", function(){
+            //create a canvas element equal to your video frame
+            let canvas = document.createElement("canvas");
+            canvas.height = videoElem.videoHeight;
+            canvas.width = videoElem.videoWidth;
+            let tool = canvas.getContext("2d");
+            tool.drawImage(videoElem, 0, 0);
+            //converting image to link
+            let link = canvas.toDataURL();
+            //downloading image
+            let anchor = document.createElement("a");
+            anchor.href = link;
+            anchor.download = "file.png";
+            anchor.click();
+            anchor.remove();
+            canvas.remove();
         })
     </script>
 </body>
