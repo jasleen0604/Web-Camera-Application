@@ -5,6 +5,11 @@ let capturebtn = document.querySelector(".capture-btn");
 let videoRecorder = document.querySelector("#record-video");
 let timingELem = document.querySelector("#timing");
 let clearObj;
+
+let allFilters = document.querySelectorAll(".filter");
+let uiFilter = document.querySelector(".ui-filter");
+let filterColor = "";
+
 let recordState = false;
 
 let constraints = {
@@ -70,6 +75,9 @@ capturebtn.addEventListener("click", function () {
     let tool = canvas.getContext("2d");
     capturebtn.classList.add("capture-animation");
     tool.drawImage(videoElem, 0, 0);
+    tool.fillStyle = filterColor; //adding filter to the image clicked
+    // translucent 
+    tool.fillRect(0, 0, canvas.width, canvas.height);
     //converting image to link
     let link = canvas.toDataURL();
     //downloading image
@@ -98,4 +106,21 @@ function stopCounting() {
     timingELem.classList.remove("timing-active");
     timingELem.innerText = "00: 00: 00";
     clearInterval(clearObj);
+}
+//filter apply
+for (let i = 0; i < allFilters.length; i++) {
+    allFilters[i].addEventListener("click", function () {
+        // add filter to ui
+        let color = allFilters[i].style.backgroundColor
+        if (color) {
+            uiFilter.classList.add("ui-filter-active");
+            uiFilter.style.backgroundColor = color;
+            filterColor = color;
+        } else {
+            uiFilter.classList.remove("ui-filter-active");
+            uiFilter.style.backgroundColor = "";
+            filterColor = "";
+
+        }
+    })
 }
