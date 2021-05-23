@@ -10,6 +10,10 @@ let allFilters = document.querySelectorAll(".filter");
 let uiFilter = document.querySelector(".ui-filter");
 let filterColor = "";
 
+let zoomInBtn = document.querySelector(".fa-plus");
+let zoomOutBtn = document.querySelector(".fa-minus");
+let zoomlevel = 1;
+
 let recordState = false;
 
 let constraints = {
@@ -74,10 +78,17 @@ capturebtn.addEventListener("click", function () {
     canvas.width = videoElem.videoWidth;
     let tool = canvas.getContext("2d");
     capturebtn.classList.add("capture-animation");
-    tool.drawImage(videoElem, 0, 0);
-    tool.fillStyle = filterColor; //adding filter to the image clicked
-    // translucent 
-    tool.fillRect(0, 0, canvas.width, canvas.height);
+
+    tool.scale(zoomlevel, zoomlevel);
+    let x = (canvas.width / zoomlevel - canvas.width) / 2;
+    let y = (canvas.height / zoomlevel - canvas.height) / 2;
+    tool.drawImage(videoElem, x, y);
+    if(filterColor){
+        tool.fillStyle = filterColor; //adding filter to the image clicked
+        // translucent 
+        tool.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
     //converting image to link
     let link = canvas.toDataURL();
     //downloading image
@@ -124,3 +135,16 @@ for (let i = 0; i < allFilters.length; i++) {
         }
     })
 }
+//picture zoom-in zoom-out
+zoomInBtn.addEventListener("click", function(){
+    if(zoomlevel < 3){
+        zoomlevel += 0.2;
+        videoElem.style.transform = `scale(${zoomlevel})`;
+    }
+})
+zoomOutBtn.addEventListener("click", function(){
+    if(zoomlevel > 1){
+        zoomlevel -= 0.2;
+        videoElem.style.transform = `scale(${zoomlevel})`;
+    }
+})
